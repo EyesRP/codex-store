@@ -1,0 +1,399 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Cairo', sans-serif;
+}
+
+body {
+    background-color: #0f1016;
+    color: #f1f5f9;
+}
+
+/* الهيدر */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 8%;
+    background-color: #151821;
+    border-bottom: 1px solid #222634;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 900;
+    color: #fff;
+}
+
+.logo span {
+    color: #6366f1;
+}
+
+.navbar nav a {
+    color: #94a3b8;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.navbar nav a:hover, .navbar nav a.active {
+    color: #6366f1;
+}
+
+.cart-icon {
+    position: relative;
+    cursor: pointer;
+    background: #222634;
+    padding: 10px 14px;
+    border-radius: 10px;
+    color: #fff;
+    transition: 0.3s;
+}
+
+.cart-icon:hover {
+    background: #6366f1;
+}
+
+.cart-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #ef4444;
+    color: white;
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 50%;
+}
+
+/* قسم الترحيب */
+.hero {
+    height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: linear-gradient(rgba(15, 16, 22, 0.8), rgba(15, 16, 22, 0.9)), url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=1920');
+    background-size: cover;
+    background-position: center;
+    padding: 0 20px;
+}
+
+.hero-content h1 {
+    font-size: 42px;
+    margin-bottom: 15px;
+    color: #fff;
+}
+
+.highlight {
+    color: #6366f1;
+}
+
+.hero-content p {
+    font-size: 18px;
+    color: #94a3b8;
+    margin-bottom: 30px;
+}
+
+.btn-main {
+    background: #6366f1;
+    color: white;
+    padding: 12px 30px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: 0.3s;
+    display: inline-block;
+}
+
+.btn-main:hover {
+    background: #4f46e5;
+    transform: translateY(-2px);
+}
+
+/* قسم المنتجات */
+.products-section {
+    padding: 60px 8%;
+}
+
+.products-section h2 {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 40px;
+    color: #fff;
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.product-card {
+    background: #151821;
+    border: 1px solid #222634;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    transition: 0.3s;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    border-color: #6366f1;
+}
+
+.product-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: #6366f1;
+    color: white;
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-weight: 700;
+}
+
+.product-badge.discord {
+    background: #5865F2;
+}
+
+.product-image {
+    height: 160px;
+    background: #1e2230;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 50px;
+    color: #6366f1;
+}
+
+.product-info {
+    padding: 20px;
+}
+
+.product-info h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.product-info p {
+    font-size: 14px;
+    color: #94a3b8;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.price {
+    font-size: 20px;
+    font-weight: 900;
+    color: #10b981;
+}
+
+.btn-add {
+    background: transparent;
+    border: 1px solid #6366f1;
+    color: #6366f1;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-add:hover {
+    background: #6366f1;
+    color: white;
+}
+
+/* التذييل */
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #151821;
+    color: #94a3b8;
+    border-top: 1px solid #222634;
+    font-size: 14px;
+}
+/* تصميم الإشعار المنبثق الاحترافي (Toast) */
+#toast-notification {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #12141d;
+    color: #fff;
+    padding: 15px 25px;
+    border-radius: 12px;
+    border: 1px solid #8b5cf6;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease;
+}
+
+#toast-notification.show {
+    opacity: 1;
+    visibility: visible;
+    bottom: 40px;
+}
+/* نافذة تسجيل الدخول المحدثة والفخمة */
+.auth-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(11, 12, 16, 0.85);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.auth-modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.auth-box {
+    background: #12141d;
+    border: 1px solid #1f2430;
+    padding: 40px 30px;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+}
+
+.auth-modal.active .auth-box {
+    transform: translateY(0);
+}
+
+.social-login-btn {
+    width: 100%;
+    padding: 14px 20px;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 15px;
+    border: 1px solid transparent;
+    font-size: 15px;
+    transition: all 0.3s ease;
+}
+
+.discord-login {
+    background: #5865F2;
+    color: white;
+}
+.discord-login:hover {
+    background: #4752c4;
+    box-shadow: 0 0 15px rgba(88, 101, 242, 0.4);
+}
+
+/* تصميم نموذج إنشاء الحساب وتسجيل الدخول الحديث */
+.auth-tabs {
+    display: flex;
+    background: #1a1d29;
+    border-radius: 12px;
+    padding: 5px;
+    margin-bottom: 25px;
+}
+
+.auth-tab {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    padding: 12px;
+    font-weight: 700;
+    font-size: 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.auth-tab.active {
+    background: #8b5cf6;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+}
+
+.auth-input-group {
+    text-align: right;
+    margin-bottom: 18px;
+}
+
+.auth-input-group label {
+    display: block;
+    color: #cbd5e1;
+    font-size: 13px;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.auth-input-wrapper {
+    display: flex;
+    align-items: center;
+    background: #1a1d29;
+    border: 1px solid #2d3748;
+    border-radius: 10px;
+    padding: 0 12px;
+    transition: 0.3s;
+}
+
+.auth-input-wrapper:focus-within {
+    border-color: #8b5cf6;
+    box-shadow: 0 0 8px rgba(139, 92, 246, 0.2);
+}
+
+.auth-input-wrapper input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: #fff;
+    padding: 12px 8px;
+    font-size: 14px;
+    outline: none;
+}
+
+.auth-input-wrapper i {
+    color: #64748b;
+}
+
+.phone-prefix {
+    background: #222634;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-left: 8px;
+    border: 1px solid #334155;
+}

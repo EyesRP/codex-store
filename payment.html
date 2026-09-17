@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوابة الدفع الآمنة - Codex Store</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body style="background-color: #0b0c10; color: #fff;">
+
+    <header class="navbar">
+        <div class="logo">
+            <i class="fa-solid fa-store"></i> Codex <span>Store</span>
+        </div>
+        <nav>
+            <a href="/cart"><i class="fa-solid fa-arrow-right"></i> العودة للسلة</a>
+        </nav>
+    </header>
+
+    <div style="max-width: 1000px; margin: 50px auto; padding: 0 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+        
+        <!-- ملخص الطلب -->
+        <div style="background: #12141d; border: 1px solid #1f2430; border-radius: 16px; padding: 30px;">
+            <h2 style="font-size: 20px; margin-bottom: 20px; color: #fff; border-bottom: 1px solid #1f2430; padding-bottom: 15px;">Order Summary</h2>
+            
+            <div style="margin-bottom: 15px; color: #94a3b8; font-size: 14px;">
+                <span>Order ID:</span>
+                <div id="order-id" style="color: #fff; font-weight: bold; font-size: 16px; margin-top: 5px;">-</div>
+            </div>
+
+            <div style="margin-bottom: 25px; color: #94a3b8; font-size: 14px;">
+                <span>Reference Number:</span>
+                <div style="color: #fff; font-weight: bold; font-size: 16px; margin-top: 5px;">CODEX-SECURE-PAY</div>
+            </div>
+
+            <div style="border-top: 1px solid #1f2430; padding-top: 20px; display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 16px; color: #fff;">Total Amount</span>
+                <span id="pay-total" style="font-size: 22px; font-weight: 900; color: #10b981;">SAR 0.00</span>
+            </div>
+        </div>
+
+        <!-- خيارات الدفع -->
+        <div style="background: #12141d; border: 1px solid #1f2430; border-radius: 16px; padding: 30px;">
+            <h2 style="font-size: 20px; margin-bottom: 20px; color: #fff;">Pay with</h2>
+
+            <button onclick="completePayment()" style="width: 100%; background: #000; color: #fff; border: 1px solid #333; padding: 15px; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; margin-bottom: 25px; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                <i class="fa-brands fa-apple-pay" style="font-size: 28px;">* Pay</i>
+            </button>
+
+            <div style="text-align: center; color: #94a3b8; font-size: 13px; margin-bottom: 20px;">Or pay with card</div>
+
+            <div style="margin-bottom: 15px;">
+                <input type="text" placeholder="XXXX XXXX XXXX XXXX" style="width: 100%; background: #1a1d29; border: 1px solid #2d3748; color: #fff; padding: 12px; border-radius: 8px; letter-spacing: 2px;">
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px;">
+                <input type="text" placeholder="MM/YY" style="background: #1a1d29; border: 1px solid #2d3748; color: #fff; padding: 12px; border-radius: 8px;">
+                <input type="password" placeholder="CVV" maxlength="3" style="background: #1a1d29; border: 1px solid #2d3748; color: #fff; padding: 12px; border-radius: 8px;">
+            </div>
+
+            <button onclick="completePayment()" class="btn-main" style="width: 100%; background: #8b5cf6; color: white; font-size: 16px; border: none; cursor: pointer;">Pay Now</button>
+
+            <div style="display: flex; justify-content: center; gap: 15px; margin-top: 25px; font-size: 24px; color: #94a3b8;">
+                <i class="fa-brands fa-cc-visa" title="Visa"></i>
+                <i class="fa-brands fa-cc-mastercard" title="Mastercard"></i>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.getElementById('order-id').innerText = Math.floor(Math.random() * 900000000) + 100000000;
+        
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let totalSum = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        document.getElementById('pay-total').innerText = `SAR ${totalSum}.00`;
+
+        function completePayment() {
+            alert('تمت عملية الدفع بنجاح! تم إرسال تفاصيل السكريبت/الخدمة إلى بريدك الإلكتروني.');
+            localStorage.removeItem('cart');
+            localStorage.removeItem('customer_info');
+            window.location.href = '/';
+        }
+    </script>
+</body>
+</html>
