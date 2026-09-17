@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إتمام الطلب - Codex Store</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* كلاس الحدود الحمراء عند حدوث خطأ */
+        .input-error {
+            border-color: #ef4444 !important;
+            box-shadow: 0 0 8px rgba(239, 68, 68, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo">
+            <i class="fa-solid fa-store"></i> Codex <span>Store</span>
+        </div>
+        <nav>
+            <a href="/">الرئيسية</a>
+        </nav>
+    </header>
+
+    <div style="max-width: 1100px; margin: 40px auto; padding: 0 20px; display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 30px;">
+        
+        <div>
+            <div style="background: #12141d; border: 1px solid #1f2430; border-radius: 16px; padding: 25px; margin-bottom: 20px;">
+                <h3 style="color: #fff; margin-bottom: 20px; font-size: 18px;">سلة المشتريات</h3>
+                <div id="cart-items-list"></div>
+            </div>
+
+            <div style="background: #12141d; border: 1px solid #1f2430; border-radius: 16px; padding: 25px;">
+                <h3 style="color: #fff; margin-bottom: 20px; font-size: 18px;">معلومات العميل (Your Details)</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                    <div>
+                        <label style="display: block; color: #94a3b8; font-size: 13px; margin-bottom: 5px;">الاسم الأول *</label>
+                        <input type="text" id="first-name" placeholder="Enter your first name" oninput="removeError(this)" style="width: 100%; background: #1a1d29; border: 1px solid #2d3748; color: #fff; padding: 12px; border-radius: 8px; transition: 0.3s;">
+                    </div>
+                    <div>
+                        <label style="display: block; color: #94a3b8; font-size: 13px; margin-bottom: 5px;">اسم العائلة *</label>
+                        <input type="text" id="last-name" placeholder="Enter your last name" oninput="removeError(this)" style="width: 100%; background: #1a1d29; border: 1px solid #2d3748; color: #fff; padding: 12px; border-radius: 8px; transition: 0.3s;">
+                    </div>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; color: #94a3b8; font-size: 13px; margin-bottom: 5px;">البريد الإلكتروني *</label>
+                    <input type="email" id="email" placeholder="Enter your email address" oninput="removeError(this)" style="width: 100%; background: #1a1d29; border: 1px solid #2d3748; color: #fff; padding: 12px; border-radius: 8px; transition: 0.3s;">
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div style="background: #12141d; border: 1px solid #1f2430; border-radius: 16px; padding: 25px; position: sticky; top: 100px;">
+                <h3 style="color: #fff; margin-bottom: 20px; font-size: 18px;">ملخص الطلب (Summary)</h3>
+                
+                <div style="display: flex; justify-content: space-between; color: #94a3b8; margin-bottom: 15px; font-size: 14px;">
+                    <span>المجموع الفرعي (<span id="item-count">0</span> منتج)</span>
+                    <span id="subtotal-price" style="color: #fff; font-weight: bold;">SAR 0.00</span>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; color: #94a3b8; margin-bottom: 20px; font-size: 14px; border-bottom: 1px solid #1f2430; padding-bottom: 15px;">
+                    <span>الإجمالي (شامل ضريبة القيمة المضافة)</span>
+                    <span id="total-price" style="color: #10b981; font-weight: 900; font-size: 18px;">SAR 0.00</span>
+                </div>
+
+                <div style="margin-bottom: 20px; display: flex; gap: 10px;">
+                    <input type="text" id="promo-code" placeholder="Promo Code" style="flex: 1; background: #1a1d29; border: 1px solid #2d3748; color: #fff; padding: 10px; border-radius: 8px;">
+                    <button onclick="applyPromo()" style="background: #1f2430; color: white; border: 1px solid #2d3748; padding: 10px 15px; border-radius: 8px; cursor: pointer; font-weight: bold;">تطبيق</button>
+                </div>
+
+                <button onclick="proceedToPayment()" class="btn-main" style="width: 100%; background: #f1f5f9; color: #0b0c10; font-size: 16px; margin-bottom: 20px; cursor: pointer;">Place Order</button>
+
+                <div style="text-align: center; border-top: 1px solid #1f2430; padding-top: 15px;">
+                    <p style="color: #94a3b8; font-size: 12px; margin-bottom: 10px;">طرق الدفع المدعومة</p>
+                    <div style="display: flex; justify-content: center; gap: 10px; font-size: 24px; color: #94a3b8;">
+                        <i class="fa-brands fa-apple-pay" title="Apple Pay"></i>
+                        <i class="fa-brands fa-cc-visa" title="Visa"></i>
+                        <i class="fa-brands fa-cc-mastercard" title="Mastercard"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>جميع الحقوق محفوظة &copy; 2026 - Codex Store</p>
+    </footer>
+
+    <script>
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        function renderCart() {
+            let listContainer = document.getElementById('cart-items-list');
+            if (cart.length === 0) {
+                listContainer.innerHTML = '<p style="color: #94a3b8; text-align: center;">السلة فارغة. <a href="/" style="color: #8b5cf6;">تصفح المنتجات</a></p>';
+                document.getElementById('subtotal-price').innerText = 'SAR 0.00';
+                document.getElementById('total-price').innerText = 'SAR 0.00';
+                document.getElementById('item-count').innerText = '0';
+                return;
+            }
+
+            let html = '';
+            let subtotal = 0;
+            let totalCount = 0;
+
+            cart.forEach((item, index) => {
+                let itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+                totalCount += item.quantity;
+                html += `
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1f2430; padding: 15px 0;">
+                        <div>
+                            <h4 style="color: #fff; font-size: 15px; margin-bottom: 4px;">${item.name}</h4>
+                            <span style="color: #10b981; font-weight: bold;">SAR ${item.price}.00</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div style="display: flex; align-items: center; background: #1a1d29; border: 1px solid #2d3748; border-radius: 6px; padding: 3px 10px; gap: 10px;">
+                                <button onclick="changeQuantity(${index}, -1)" style="background:none; border:none; color:#fff; cursor:pointer;">-</button>
+                                <span style="font-weight: bold; color: #fff;">${item.quantity}</span>
+                                <button onclick="changeQuantity(${index}, 1)" style="background:none; border:none; color:#fff; cursor:pointer;">+</button>
+                            </div>
+                            <button onclick="removeItem(${index})" style="background: #ef4444; color: white; border: none; padding: 8px 10px; border-radius: 6px; cursor: pointer;"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            listContainer.innerHTML = html;
+            document.getElementById('subtotal-price').innerText = `SAR ${subtotal}.00`;
+            document.getElementById('total-price').innerText = `SAR ${subtotal}.00`;
+            document.getElementById('item-count').innerText = totalCount;
+        }
+
+        function changeQuantity(index, amount) {
+            cart[index].quantity += amount;
+            if (cart[index].quantity < 1) cart[index].quantity = 1;
+            localStorage.setItem('cart', JSON.stringify(cart));
+            renderCart();
+        }
+
+        function removeItem(index) {
+            cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            renderCart();
+        }
+
+        function removeError(element) {
+            // إزالة الإطار الأحمر فور أن يبدأ العميل بالكتابة
+            if (element.value.trim() !== '') {
+                element.classList.remove('input-error');
+            }
+        }
+
+        function applyPromo() {
+            let code = document.getElementById('promo-code').value;
+            if (code === 'CODEX') {
+                alert('تم تطبيق الخصم بنجاح!');
+            } else {
+                alert('كود الخصم غير صحيح!');
+            }
+        }
+
+        function proceedToPayment() {
+            if (cart.length === 0) {
+                alert('سلة المشتريات فارغة!');
+                return;
+            }
+
+            let firstNameInput = document.getElementById('first-name');
+            let lastNameInput = document.getElementById('last-name');
+            let emailInput = document.getElementById('email');
+
+            let firstName = firstNameInput.value.trim();
+            let lastName = lastNameInput.value.trim();
+            let email = emailInput.value.trim();
+
+            let hasError = false;
+
+            // فحص كل حقل وإضافة الإطار الأحمر إذا كان فارغاً
+            if (!firstName) {
+                firstNameInput.classList.add('input-error');
+                hasError = true;
+            }
+            if (!lastName) {
+                lastNameInput.classList.add('input-error');
+                hasError = true;
+            }
+            if (!email) {
+                emailInput.classList.add('input-error');
+                hasError = true;
+            }
+
+            if (hasError) {
+                // التمرير تلقائياً إلى خانة المعلومات لتلفت انتباه العميل
+                firstNameInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return;
+            }
+
+            // حفظ بيانات العميل والانتقال لصفحة الدفع
+            localStorage.setItem('customer_info', JSON.stringify({ firstName, lastName, email }));
+            window.location.href = '/payment';
+        }
+
+        renderCart();
+    </script>
+</body>
+</html>
